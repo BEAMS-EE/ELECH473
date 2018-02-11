@@ -1,0 +1,38 @@
+@   0 :           : lui 1,511
+@   1 :           : addi 1,1,63
+@   2 :           : lui 2,0
+@   3 :           : addi 2,2,7
+label : loop @4
+@   4 : loop      : beq 5, 2, end
+@   5 :           : add 3, 3, 1
+@   6 :           : addi 5, 5, 1
+@   7 :           : beq 0, 0, loop
+label : end @8
+@   8 : end       : halt
+Instructions :  8
+{'end': 8, 'loop': 4}
+test_report.txt
+Instructions 0 to 3 changed to 'nop', let's test...
+0x0000 x 0x00ff =0x00000000, passed	(instr=    1025)
+0x00ff x 0x0000 =0x00000000, passed	(instr=       5)
+0x7fff x 0x0007!=0x00037ff9(=0x00007ff9), FAILED!!! 	(instr=      33)
+0xffff x 0x0007!=0x0006fff9(=0x0000fff9), FAILED!!! 	(instr=      33)
+0xa060 x 0x88dc!=0x55bcd280(=0x0000d280), FAILED!!! 	(instr=  140149)
+0x0001 x 0x0001 =0x00000001, passed	(instr=       9)
+0x0003 x 0x0003 =0x00000009, passed	(instr=      17)
+0x0007 x 0x0007 =0x00000031, passed	(instr=      33)
+0x000f x 0x000f =0x000000e1, passed	(instr=      65)
+0x001f x 0x001f =0x000003c1, passed	(instr=     129)
+0x003f x 0x003f =0x00000f81, passed	(instr=     257)
+0x007f x 0x007f =0x00003f01, passed	(instr=     513)
+0x00ff x 0x00ff =0x0000fe01, passed	(instr=    1025)
+0x01ff x 0x01ff!=0x0003fc01(=0x0000fc01), FAILED!!! 	(instr=    2049)
+0x03ff x 0x03ff!=0x000ff801(=0x0000f801), FAILED!!! 	(instr=    4097)
+0x07ff x 0x07ff!=0x003ff001(=0x0000f001), FAILED!!! 	(instr=    8193)
+0x0fff x 0x0fff!=0x00ffe001(=0x0000e001), FAILED!!! 	(instr=   16385)
+0x1fff x 0x1fff!=0x03ffc001(=0x0000c001), FAILED!!! 	(instr=   32769)
+0x3fff x 0x3fff!=0x0fff8001(=0x00008001), FAILED!!! 	(instr=   65537)
+0x7fff x 0x7fff!=0x3fff0001(=0x00000001), FAILED!!! 	(instr=  131073)
+0xffff x 0xffff!=0xfffe0001(=0x00000001), FAILED!!! 	(instr=  262145)
+Tests : 21,  10 passed => 47.6% passed
+Argument size : 8 bits
