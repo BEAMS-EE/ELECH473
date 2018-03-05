@@ -143,7 +143,7 @@ pdfsubject={dsPIC33}
 \item Use a simulator and to understand its utility.
 \item Understand the instruction set and the assembly language, starting from the code produced by a C compiler. See the link between high-level language instructions and assembly/machine code.
 \item Discover the limitations of small micro-controllers.
-\item Understand the time spend in basic computations and other limitations.
+\item Understand the time spent in basic computations and other limitations.
 \item Understand how parameters are passed to a function.
 \item Understand \kw{string} initialisation in the \kw{dsPIC33}.
 \end{itemize}
@@ -255,7 +255,7 @@ In this lab, you will use the header file \kw{Datatypes.h} to redefine the types
 %variables.c
 \begin{itemize}
 \item Replace the file \kw{initvar.c} by \kw{variables.c}.
-\item Make the line numbers appear in the C source (right-click on window->Properties->C File Type ->line numbers)
+\item Make the line numbers appear in the C source (right-click on Edit->Properties->C File Type ->line numbers)
 \item Click on ``Build all" to compile and link every file of the project. Ignore the warnings for the moment.
 \end{itemize}
 
@@ -270,7 +270,7 @@ Observe in the assembly code the initialization of the different variables; adva
 %\Q{Observe attentively the values of the various variables in the ``Watch" window. Do you have any comment?}{}
 %\Q{Observe attentively the values of the various variables in the ``File register" window. In particular see how the \kw{INT32U} and \kw{INT64U} are stored and the mental effort required if you want to analyse long variables in memory. Are all variables initialized correctly?}{}
 %\Q{Pay attention to the warnings appearing in the ``Output" window, are they justified?}{}
-\Q{The code defines a global variable \kw{glob1}. Where is it defined? initialised? %REM: A \kw{global} cannot be initialized in its declaration. % why ???
+\Q{The code defines a global variable \kw{glob1}. Where is it defined and initialized? %REM: A \kw{global} cannot be initialized in its declaration. % why ???
 }{}
 \Q{ Explain how to place this variable in a register (the grammar can vary depending on the compiler, but the keyword \kw{register} is always used). }{}
 
