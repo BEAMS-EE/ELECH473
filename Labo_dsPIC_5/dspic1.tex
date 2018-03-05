@@ -1,0 +1,418 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+%\usepackage{stringenc} % for grffile
+%\usepackage{ucs}
+\usepackage{textcomp}
+\usepackage{amsthm} %numéroter les questions
+\usepackage[english]{babel}
+\usepackage{datetime}
+\usepackage{xspace} % typographie IN
+\usepackage{hyperref}% hyperliens
+\usepackage[all]{hypcap} %lien pointe en haut des figures
+\usepackage[english]{varioref} %voir x p y
+\usepackage{fancyhdr}% en têtes
+%\input cyracc.def
+\usepackage[]{graphicx} %include pictures
+%\usepackage[encoding,inputencoding=utf8,filenameencoding=utf8]{grffile}
+%\usepackage[extendedchars,inputencoding=latin1,filenameencoding=latin1]{grffile}
+\usepackage[siunitx ]{circuitikz}
+\usepackage{gnuplottex}
+\usepackage{ifthen}
+\graphicspath{{./figures/}}
+%\usepackage{array}
+\usepackage{amsmath}
+\usepackage[]{xcolor}
+\usepackage{tikz}
+\usepackage{tikz-timing}
+\usetikzlibrary{scopes}
+\usetikzlibrary{backgrounds}
+\usepackage{listings}
+\usepackage{enumitem}
+\usepackage[top=1 in, bottom=1 in, left=1.3 in, right=1 in]{geometry} % Yeah, that's bad to play with margins
+\usepackage[]{pdfpages}
+\usepackage{pdflscape}
+\usepackage[]{attachfile}
+%\usepackage{colortbl}
+%\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{makecell}
+\usepackage[ ]{subfig}
+%\usepackage{rotating}
+
+%\newdateformat{mydate}{2015--2016}%hack pour remplacer \THEYEAR
+
+%cyr
+%\newcommand\textcyr[1]{{\fontencoding{OT2}\fontfamily{wncyr}\selectfont #1}}
+
+
+\newboolean{corrige}
+%\setboolean{corrige}{true}%corrigé
+\setboolean{corrige}{false}% pas de corrigé
+
+\newboolean{annexes}
+%\setboolean{annexes}{true}%annexes
+\setboolean{annexes}{false}% pas de annexes
+
+\newboolean{mos}
+%\setboolean{mos}{true}%annexes
+\setboolean{mos}{false}% pas de annexes
+
+
+\usepackage{aeguill} %guillemets
+
+%% fancy header & foot
+\pagestyle{fancy}
+\lhead{[ELEC-H-473] Microprocessor Architecture dsPIC33}
+\rhead{v1.0.0\\ page \thepage}
+\chead{\ifthenelse{\boolean{corrige}}{Corrigé}{}}
+\cfoot{}
+%%
+
+\pdfinfo{
+/Author (Yannick Allard, ULB -- BEAMS)
+/Title (Labo n 5 ELEC-H-473, dsPIC33)
+/ModDate (D:\pdfdate)
+}
+
+\hypersetup{
+pdftitle={Labo n° 5 [ELEC-H-473] Microprocessor Architectures},
+pdfauthor={Yannick Allard, ©2014-15 ULB - BEAMS  },
+pdfsubject={dsPIC33}
+}
+
+\theoremstyle{definition}% questions pas en italique
+\newtheorem{E}{Exercise}[] % numéroter les questions [section] ou non []
+\newtheorem{Q}{Question}[] % numéroter les questions [section] ou non []
+
+\newcommand{\reponse}[1]{% pour intégrer une réponse : \reponse{texte} : sera inclus si \boolean{corrige}
+	\ifthenelse {\boolean{corrige}} {\paragraph{Answer :} #1} {}
+ }
+
+\newcommand{\addcontentslinenono}[4]{\addtocontents{#1}{\protect\contentsline{#2}{#3}{#4}{}}}
+
+\newcommand{\on}[1]{\operatorname{#1}}
+
+\newcommand{\reg}[1]{\texttt{reg#1}}
+
+\def\labelitemi{--}
+\setlist{parsep=0pt,itemsep=0pt,style=standard,leftmargin=\parindent, align=left} % pas d'espace prohibitif entre les items
+\setlist{nolistsep}
+
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+%\setlength{\tabcolsep}{0pt} %no extra space in cells to keep constant tabular width
+
+\date{\vspace{-1cm}v1.0.0}
+\title{\vspace{-2cm} Labo n° 5\\ Microprocessor Architectures [ELEC-H-473]\\ dsPIC33: simulation \ifthenelse{\boolean{corrige}}{~\\Corrigé}{}}
+
+%\author{\vspace{-1cm}}%\textsc{Yannick Allard}}
+
+\newcommand{\kw}[1]{\texttt{#1}}
+
+\lstdefinestyle{customasm}{
+ % belowcaptionskip=1\baselineskip,
+ % frame=L,
+ % xleftmargin=\parindent,
+  language=[x86masm]Assembler,
+  basicstyle=\footnotesize\ttfamily,
+  commentstyle=\itshape\color{purple!40!black},
+  comment=[l]//,
+}
+\lstdefinestyle{customc}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  frame=L,
+  xleftmargin=\parindent,
+  language=C,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{green!40!black},
+  commentstyle=\itshape\color{purple!40!black},
+  identifierstyle=\color{blue},
+  stringstyle=\color{orange},
+}
+\lstset{escapechar=@,style=customc}
+
+\begin{document}
+
+\maketitle
+
+\section*{ Purpose}
+\begin{itemize}
+\item Use a simulator and to understand its utility.
+\item Understand the instruction set and the assembly language, starting from the code produced by a C compiler. See the link between high-level language instructions and assembly/machine code.
+\item Discover the limitations of small micro-controllers.
+\item Understand the time spend in basic computations and other limitations.
+\item Understand how parameters are passed to a function.
+\item Understand \kw{string} initialisation in the \kw{dsPIC33}.
+\end{itemize}
+
+
+\subsection*{Useful Documents}
+A set of useful documents can be found in the network share ``Labo/ELEC-H-473/dsPIC33": %XXX-XXX\marginpar{right path}
+\begin{itemize}
+\item Introduction to MPLAB
+%\item The Explorer16 board documentation
+\item \href{http://ww1.microchip.com/downloads/en/devicedoc/c30_users_guide_51284f.pdf}{MPLAB C30 C Compiler User's guide }
+\item \href{http://ww1.microchip.com/downloads/en/DeviceDoc/70157C.pdf}{dsPIC30F/33F Programmer's Reference Manual}
+\item \href{http://ww1.microchip.com/downloads/en/DeviceDoc/70286C.pdf}{dsPIC33FJXXXGPX06/X08/X10 Data Sheet}
+\item \href{http://ww1.microchip.com/downloads/en/DeviceDoc/70204C.pdf}{dsPIC30F/33F CPU reference manual}
+\end{itemize}
+
+\section{Architecture analysis}
+
+\subsection{CPU architecture}
+
+\Q{Detail the architecture of the CPU used in this microcontroller. Focus on the CPU, not on the peripherals.}{}
+
+\Q{Explain the difference between a microprocessor and a microcontroller.}{}
+
+% ~\\Now, focus on the CPU.
+% \subsection{Memory Addressing modes }
+%
+% \Q{In the ``Programmer's Reference Manual'', identify the various addressing modes} {}
+% \Q{Give an example of instruction illustrating each addressing mode and instructions using multiple addressing modes, explain how they work.}{}
+%
+% \Q{What is the size of an instruction? Is this coherent with the CPU architecture presented in the datasheet?}{}
+%
+% \Q{Examine the notion of ``format" of the instruction and show using examples that the size of the instruction introduces limitations in the range of each addressing mode and in the size of constants. }{}
+
+
+\section{MPLAB IDE -- Simulation workspace}
+You can configure your environment to suit your needs:
+\begin{itemize}
+\item Launch the MPLAB IDE.
+\item Open the workspace \textbf{``Simul\_dsPIC1.mcw"} (File>Open Workspace) which already includes:
+\begin{itemize}
+	 \item the choice of the microcontroller.
+	 \item the configuration of the debugger in the \textit{simulation mode} which enables you to execute and debug the code in your development environment, \textit{without} any microcontroller hardware.
+ \end{itemize}
+
+\item Display the following windows in your IDE
+\begin{itemize}
+	\item C source code
+	\item Output for note, warning and error messages
+	\item Disassembly listing (right-click in the window and check ``Symbolic Disassembly")
+	\item Memory Usage: amount of memory used for program and data
+	\item Stopwatch: number of cycles required to execute each instruction
+	\item Watch window to observe the registers and variables
+	\item File Register: to dump the Data Memory
+\end{itemize}
+\item Save your workspace under another name (File>Save Workspace as) to be able to reuse it any time.
+\end{itemize}
+
+
+
+
+\section{Project organisation}
+Using the MPLAB IDE, you now will compile some code for the \kw{dsPIC33} using the C30 compiler and analyse it. %The project includes some header files and some :
+\subsection{ Header Files}
+Notice the presence of the file \kw{p33FJ256GP710.h} in the header files. Double-click on it and read its content.
+
+\Q{Look at lines related to the I/O port \kw{PORTA}, for example. Explain the utility of this header file.}{}
+
+%\Q{Explain why such a file exists.}{}
+\Q{Explain the use of the adjective ``volatile" in this header file.}{}
+
+
+
+\subsection{ Types of the variables}
+%initvar.c
+Add the source file \verb!initvar.c! to the project and read it.
+
+%\Q{What are the various types of variables accepted by the compiler and their min-max range? (cf MPLAB C30 C Compiler User guide). Convert the min-max range in decimal.}{}
+
+\Q{Are the integer types signed or unsigned if you do not specify it explicitly? }{}
+
+
+
+
+
+~\\\fbox{\begin{minipage}{\linewidth}
+\begin{center}
+\textbf{Variable types definition ambiguity}
+\end{center}
+
+The size of certain types of variable can change from one processor to another; for example the default size of the \texttt{int} standard can be puzzling because it depends on the size of the data bus (but not always):
+\begin{itemize}
+\item for 8-bit µP it can be 8 bits, but is often 16 bits
+\item for 16-bit µP it is 16 bits
+\item for 32-bit µP it can be 16 bits, or 32 bits
+\end{itemize}
+
+Moreover, the fact that a \kw{char} or an \kw{int} is \kw{signed} or \kw{unsigned} by default depends on the compiler and on the options of the compiler.
+It is always a good practice to improve the  \textit{portability}  of the code \textit{i.e.} to minimize the modifications when you want to migrate to another processor. For this reason it is wise to gather \textit{everything which depends on the µP} in a few files, so that only those well-identified files have to be modified for another processor.
+
+In this lab, you will use the header file \kw{Datatypes.h} to redefine the types of the variables to avoid any ambiguity.
+ \end{minipage}
+ }%fbox
+
+ \Q{Add \kw{Datatypes.h} in the header files of your project, explain the improvement given by these new definitions.}{}
+
+
+\subsection{Variables initialisation}
+%variables.c
+\begin{itemize}
+\item Replace the file \kw{initvar.c} by \kw{variables.c}.
+\item Make the line numbers appear in the C source (right-click on window->Properties->C File Type ->line numbers)
+\item Click on ``Build all" to compile and link every file of the project. Ignore the warnings for the moment.
+\end{itemize}
+
+
+REM : the assembly code begins with the ``\kw{lnk}" instruction which will allocate a "stack frame" for the local variables of the function \kw{main()}. Refer to 4.7.4 of the ``dsPIC30F/33F Programmer’s Reference Manual\_70157B.pdf" for the explanation of stack frames and the use of \kw{W15} as a Stack Pointer and \kw{W14} as a Frame Pointer.
+
+Observe in the assembly code the initialization of the different variables; advance in the program using breakpoints and step-by-step mode (both in C and in ASM) and observe the state of the variables in the ``Watch" window (trick: add \kw{W14} to the Watch Window); you can change the properties of the Watch Window to observe the values of the variables in different bases.
+
+%\Q{Where are the different variables stored?}{}
+%\Q{Describe how variables are initialized? What are the difference between the different types and the addressing mode(s)  .}{}
+\Q{Observe the number of instructions necessary to initialize each variable, use the ``Stopwatch" window.}{}
+%\Q{Observe attentively the values of the various variables in the ``Watch" window. Do you have any comment?}{}
+%\Q{Observe attentively the values of the various variables in the ``File register" window. In particular see how the \kw{INT32U} and \kw{INT64U} are stored and the mental effort required if you want to analyse long variables in memory. Are all variables initialized correctly?}{}
+%\Q{Pay attention to the warnings appearing in the ``Output" window, are they justified?}{}
+\Q{The code defines a global variable \kw{glob1}. Where is it defined? initialised? %REM: A \kw{global} cannot be initialized in its declaration. % why ???
+}{}
+\Q{ Explain how to place this variable in a register (the grammar can vary depending on the compiler, but the keyword \kw{register} is always used). }{}
+
+% \subsection{Variables initialisation, be careful}
+% %variables2.c
+% Replace the file \kw{variables.c} by \kw{variables2.c}.
+%
+% \Q{Observe the warnings and the actual results in the watch window. What is the problem? What is the difference between signed and unsigned variables ?}{}
+
+\subsection{Variable assignations}
+Replace \kw{variables.c} by \kw{assign.c} and compile.
+\Q{Observe and comment the way variables are accessed compared to \kw{variables.c.}}{}
+\Q{Observe the way assignations work. Explain any unexpected result.\label{Q:last}}{}
+
+
+% ##          ###    ########   #######           #######
+% ##         ## ##   ##     ## ##     ##         ##     ##
+% ##        ##   ##  ##     ## ##     ##                ##
+% ##       ##     ## ########  ##     ## #######  #######
+% ##       ######### ##     ## ##     ##         ##
+% ##       ##     ## ##     ## ##     ##         ##
+% ######## ##     ## ########   #######          #########
+
+
+\section{Arithmetics}
+Open the workspace \textbf{``Simul\_dsPIC2.mcw"} (File>Open Workspace).
+\subsection{Basics}
+Replace, in your current project, the source file by \kw{arithm.c} and compile the project.
+\Q{How are the different additions and multiplications carried out?}{}
+\Q{For each operation, indicate if the result is correct; if it is not, explain the error and the result obtained. Explain the tests (if) based on the "Carry" \kw{C} and on the "Overflow" \kw{OV}.}{}
+\Q{Compare time necessary to execute the multiplications.  Are all results correct?}{}
+
+
+~\\\fbox{
+\begin{minipage}{\linewidth}
+\begin{center}
+\textbf{Rules of thumb}
+\end{center}
+
+\begin{itemize}
+\item To spare \textbf{memory}, use the smallest size variable, according to the maximum value of the variable, of course. It might lead to longer execution time.
+\item Arithmetical operations are faster with variables of the native size of operands for the ALU (16 bits with the \kw{dsPIC33}).
+\item Pay attention to Carry and Overflows.
+\item Do typecasting yourself if you want to be sure of the behaviour of the compiler.
+\end{itemize}
+\end{minipage}
+}
+
+\subsubsection{Multiplication, division}
+Replace the file \kw{arithm.c} by \kw{exemple1.c} and compile the project;
+
+\Q{Observe the various manners of computing $a\times b/c$: What are the differences? Explain why the multiplication should be done first.}{}
+
+\Q{Compare the computing time of the operations. Which one is the longest operation? }{}
+
+\subsection{Fixed point \textit{vs} Floating point}
+
+Replace the file \kw{exemple1.c} by \kw{exemple2.c}; compile the project;
+
+\Q{Compare, for the 3 methods, the result and the number of clock cycles.
+
+}{}
+\Q{Explain how rounding works in the 3rd method.}{}
+
+\Q{What is, in your opinion, the greatest disadvantage of the second method?
+
+The constants by which \kw{f1} and \kw{f2} are multiplied are chosen this way and:
+\begin{itemize}
+\item we know that \kw{f1} will never exceed 15.
+\item if \kw{f1} is multiplied by 16, the result will not exceed 255 and can be placed in an \kw{INT8U} (\kw{a} in the program).
+\end{itemize}
+}{}
+
+\Q{How would you change the program if \kw{f1} had to be multiplied by $2^4$  and \kw{f2} by $2^6$? Check that the saving of computation time of calculation is still significant in this case. }{}
+
+~\\\fbox{\begin{minipage}{\linewidth}
+\begin{center}
+Fixed point \textit{vs} Floating point
+\end{center}
+
+The great advantage of the float variables is that you have got few risk of overflow (check the largest value of a 32-bit floating number), but the price to pay is an increased computing time if the CPU does not have a FPU. This example shows how you can avoid the use of float variables to save computing time: this program multiplies \kw{f1} and \kw{f2} and extract the integer part to send it to an 8-bit digital-to-analog converter. Three methods are shown. %\marginpar{check}
+
+In the second method, \kw{f1} and \kw{f2} are initially multiplied by a power of 2 (here $2^4$), then rounded and placed in char variables. We know that the product is  $2^4  \times 2^4  = 2^8$  times too large; it is thus necessary to divide it by $2^8$  (i.e. keep the most significant byte)
+
+In the third method, the last division gives a rounded result instead of a truncated on, which is an improvement.
+\end{minipage}
+}
+
+\section{Parameter passing}
+\subsection{Passing by value}
+Replace the file \kw{exemple2.c} by \kw{param1.c}  and compile the project.
+
+%Determine:
+\Q{Where are stored the variables of \kw{main()} (a, b, c\dots)?}{}
+\Q{Where are copied, in the \kw{main()} function, the different parameters of \kw{Add3()} and \kw{Mul2()} before those function are called?}{}
+
+\Q{In \kw{Add3()} where are stored the local variable \kw{a}?}{}
+\Q{In \kw{Add3()} where are stored the parameters passed to \kw{Add3()?}}{}
+\Q{How \kw{Add3()} and \kw{Mul2()} return their results?}{}
+
+\subsection{Passing by reference}
+Replace the file \kw{param.c} by \kw{param2.c}  and compile the project.
+
+\noindent
+In this file, in \kw{function1()}, an array is passed as a parameter.
+\Q{How is this parameter passed?}{}
+\Q{How is the array used in \kw{function1()}?\\}{}
+
+\noindent
+The function \kw{swapnum()} illustrates how you can pass parameters that are not arrays by reference.
+%\Q{What are the meaning of \kw{\&a} and \kw{*i}?}{}
+\Q{Explain the mechanism used with \kw{swapnum()}.}{}
+
+\section{Character strings}
+A \textit{character string} is simply an array of \kw{char}. The array size must be equal to the largest string that it shall store. To take into account the variable size of the string, it its terminated by a \textit{null character} (\kw{0x00}). Since a microprocessor can only store binary numbers, letters are coded. The most ancient, popular and compact code is the ASCII code (see Useful documents for a table). A more recent code is Unicode, that may use more than one byte if needed to represent letters in any language\footnote{This lab focuses on the classic ASCII code, for further reference about Unicode and the various possibilities, read the official documentation on the \href{http://www.unicode.org/}{Official Unicode website}}.%\marginpar{ref}
+
+Strings are an opportunity to speak about \textit{constants}, since many strings that you shall use in your programs (like prompts and error messages) are constants that you define when you write your source code. Since they do not change, \textit{constants are stored in program memory}.
+
+The \kw{dsPIC33} is a processor with an Harvard architecture\footnote{This is just a short summary, read the CPU documentation for more exhaustive explanations.}. Program memory is in FLASH technology and stores 24-bit instructions extracted by a special instruction bus. Data memory is a static RAM and stores variables of different sizes extracted via a 16-bit data bus. Thus, accessing constants requires a datapath instruction bus to data bus. In the \kw{dsPIC} this path links the 16 least significant bits of the instruction bus to the data bus. Now what about the addressing mode to access constants. In the \kw{dsPIC}, the trick is called \kw{PSV} (Program Space Visibility) and allows pages of the Program Memory to appear in the upper half (starting at \kw{0x8000}) of the Data Memory (see \kw{dsPIC33} Data Sheet §4.6.3). By default the Page is \kw{0}, so that the address \kw{0x000000} of Program Memory is mapped at \kw{0x8000} of Data Memory.
+
+~
+
+\begin{itemize}
+\item Replace the file \kw{param2.c} by  \kw{carac.c}  and compile the project.
+\item Put a breakpoint at the first line of code and run the program.
+\item Open the Program Memory window (View->Program memory) and browse the beginning of the code in the various modes that you can choose by clicking on the buttons at the bottom of the window. In particular you can view the Program Memory seen from the Data Memory point of view by the PSV Mixed and PSV Data.
+\item Note that the compiler produces a starting code (corresponding to the reset vector) to initialize lots of things in the processor, clear the Data Memory\dots
+
+\item Browse the Program Memory in mode PSV Data until you find the constant strings ``hello" and ``world". Note their address in both Program and PSV spaces and length.
+
+\item Browse the same addresses in PSV Mixed mode;
+\end{itemize}
+
+
+
+
+
+\Q{How is this area seen from the Program point of view? Why is it so.}{}
+
+Observe the initialization of the different variables and constants, and the mechanism of a for loop.
+
+%\Q{\label{Q:last} What is the difference between using a \kw{INT8U} index and a \kw{INT16U} index?}{}
+
+
+\end{document}
