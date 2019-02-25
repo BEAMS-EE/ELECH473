@@ -41,7 +41,7 @@
 \usepackage[ ]{subfig}
 %\usepackage{rotating}
 
-\newcommand{\version}{v1.0.1}
+\newcommand{\version}{v1.0.2}
 
 %cyr
 %\newcommand\textcyr[1]{{\fontencoding{OT2}\fontfamily{wncyr}\selectfont #1}}
@@ -281,7 +281,7 @@ The number of registers and the number of bits used for immediate constants can 
 		ADDI & 1000 & reg A & reg B & \multicolumn{2}{c}{signed immediate (-64 to 63)} \\
 		SHIFTI & 1001 & reg A & reg B & \multicolumn{2}{c}{signed immediate (-64 to 63)} \\
 		BL & 1010 & reg A & reg B & \multicolumn{2}{c}{signed immediate (-64 to 63)} \\
-		MUL & 1011 & reg A & reg B & \multicolumn{2}{c}{signed immediate (-64 to 63)} \\
+		MUL & 1011 & reg A & reg B & 0000 & {reg C} \\
 		LW& 1100 & reg A & reg B & \multicolumn{2}{c}{signed immediate (-64 to 63)} \\
 		SW& 1101 & reg A & reg B & \multicolumn{2}{c}{signed immediate (-64 to 63)} \\
 		BEQ & 1110 & reg A & reg B & \multicolumn{2}{c}{signed immediate (-64 to 63)} \\
