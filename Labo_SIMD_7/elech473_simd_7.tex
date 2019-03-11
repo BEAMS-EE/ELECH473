@@ -1,0 +1,204 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+%\usepackage{stringenc} % for grffile
+\usepackage{ucs}
+\usepackage{amsthm} %numéroter les questions
+\usepackage[english]{babel}
+\usepackage{datetime}
+\usepackage{xspace} % typographie IN
+\usepackage{hyperref}% hyperliens
+\usepackage[all]{hypcap} %lien pointe en haut des figures
+\usepackage[english]{varioref} %voir x p y
+\usepackage{fancyhdr}% en têtes
+%\input cyracc.def
+\usepackage[]{graphicx} %include pictures
+%\usepackage[encoding,inputencoding=utf8,filenameencoding=utf8]{grffile}
+%\usepackage[extendedchars,inputencoding=latin1,filenameencoding=latin1]{grffile}
+\usepackage[siunitx ]{circuitikz}
+%\usepackage{gnuplottex}
+\usepackage{ifthen}
+\graphicspath{{./figures/}}
+\usepackage{array}
+\usepackage{amsmath}
+\usepackage[]{xcolor}
+\usepackage{tikz}
+\usepackage{tikz-timing}
+\usetikzlibrary{scopes}
+\usetikzlibrary{backgrounds}
+\usepackage{listings}
+\usepackage{enumitem}
+\usepackage[top=1 in, bottom=1 in, left=1.3 in, right=1 in]{geometry} % Yeah, that's bad to play with margins
+\usepackage[]{pdfpages}
+\usepackage{pdflscape}
+\usepackage[]{attachfile}
+\usepackage{colortbl}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{rotating}
+\usepackage{fontawesome} %Symbols
+\usepackage[cache=false]{minted}
+
+\newcommand{\version}{v1.0.0}
+
+%cyr
+%\newcommand\textcyr[1]{{\fontencoding{OT2}\fontfamily{wncyr}\selectfont #1}}
+
+
+\newboolean{corrige}
+%\setboolean{corrige}{true}%corrigé
+\setboolean{corrige}{false}% pas de corrigé
+
+\usepackage{aeguill} %guillemets
+
+%% fancy header & foot
+\pagestyle{fancy}
+\lhead{[ELEC-H-473] Microprocessor Architectures: SIMD 1}
+\rhead{\version\\ page \thepage}
+\chead{\ifthenelse{\boolean{corrige}}{Corrigé}{}}
+\cfoot{}
+%%
+
+\pdfinfo{
+/Author (La saucisse électronique volante)
+/Title (ELECH473 Lab 7 - SIMD 1)
+/ModDate (D:\pdfdate)
+}
+
+\hypersetup{
+pdftitle={ELECH473 Lab 7 - SIMD 1},
+pdfauthor={Mouette unijambiste vengeresse},
+pdfsubject={SIMD 1}
+}
+
+\theoremstyle{definition}% questions pas en italique
+\newtheorem{Q}{Question}[] % numéroter les questions [section] ou non []
+
+\newcommand{\reponse}[1]{% pour intégrer une réponse : \reponse{texte} : sera inclus si \boolean{corrige}
+	\ifthenelse {\boolean{corrige}} {\paragraph{Réponse :} #1} {}
+ }
+
+\newcommand{\addcontentslinenono}[4]{\addtocontents{#1}{\protect\contentsline{#2}{#3}{#4}{}}}
+
+\newcommand{\on}[1]{{\operatorname{#1}}}
+
+\def\labelitemi{--}
+\setlist{parsep=0pt,itemsep=0pt,style=standard,leftmargin=\parindent, align=left} % pas d'espace prohibitif entre les items
+\setlist{nolistsep}
+
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\setlength{\tabcolsep}{0pt} %no extra space in cells to keep constant tabular width
+
+\date{\vspace{-1cm}\version}
+\title{\vspace{-2cm} Lab 7\\ Microprocessor Architectures [ELEC-H-473]\\ SIMD 1: Image threshold\ifthenelse{\boolean{corrige}}{~\\Corrigé}{}}
+
+%\author{\vspace{-1cm}}%\textsc{Yannick Allard}}
+
+
+\lstdefinestyle{customasm}{
+ % belowcaptionskip=1\baselineskip,
+ % frame=L,
+ % xleftmargin=\parindent,
+ language=[x86masm]Assembler,
+ basicstyle=\footnotesize\ttfamily,
+ commentstyle=\itshape\color{magenta!40!black},
+  comment=[l]//,
+}
+
+\lstset{escapechar=@,style=customasm}
+
+\begin{document}
+
+% Introduce a new counter for counting the nodes needed for circling
+\newcounter{nodecount}
+% Command for making a new node and naming it according to the nodecount counter
+\newcommand\tabnode[1]{\addtocounter{nodecount}{1} \tikz \node (\arabic{nodecount}) {#1};}
+
+% Some options common to all the nodes and paths
+\tikzstyle{every picture}+=[remember picture,baseline]
+\tikzstyle{every node}+=[inner sep=0pt,anchor=base]
+\tikzstyle{every path}+=[thick, rounded corners]
+
+
+
+\maketitle
+\section*{Description of the lab}
+Objetives:
+\begin{itemize}
+	\item Learn how to use Code::Blocks.
+	\item Write	elementary C programs and how to use SIMD with inline assembly.
+	\item Learn how to use the debugging environment.
+	\item For the proposed problem, implement C and SIMD versions of the program.
+	\item Measure execution times to compare different implementations and understand the advantages of SIMD.
+\end{itemize}
+
+\section*{Preliminary}
+\begin{itemize}
+	\item Start by writing a ``Hello World'' program.
+	\item Modify your code by adding some arithmetical operations.
+	\item Launch the program in debug mode and execute it step-by-step.
+	\item Learn how to observe register file change.
+\end{itemize}
+
+\section*{Turning a grey scale image black and white}
+Digital images can be represented in the form of a two-dimensional matrix where indexes i,j represent the spatial coordinates of the image.
+For a colour image there are three matrices, one per colour component R, G and B (Red, Green, Blue).
+For a grey level image, only one matrix is necessary (R, G, B components have the same value).
+Depending on image quantification, we can have more or less colours.
+Most of the time grey level images are coded using 8 bits of information per pixel.
+This means 256 colours with:
+\begin{itemize}
+	\item Black is $(0)_{10} = (00000000)_2$
+	\item White is $(255)_{10} = (11111111)_2$
+\end{itemize}
+
+In image processing applications, it is often useful to work with binary images that use only black and white colours.
+For such images, the pixel value is given only with a binary choice: black (0) or white (1).
+For images coded with 8 bits, this means 0 or 255 (0x00 or 0xFF in hexadecimal).
+In order to convert one grey level image into a black and white binary image we need to fix a threshold value.
+If the current pixel value is smaller than the threshold value, we will set the new pixel value to 0; otherwise it will be set to 255.
+Depending on the input image and the value of the threshold we will obtain different resulting images.
+For this exercise you can use the value of the threshold as you like, we are only interested in the way computation is being performed (and the execution time).
+
+Here is the pseudo-code of what you will have to program:
+\begin{minted}{C}
+for (all_images) {
+	read_image_from_file
+	start_time = get_time ()
+	for (all_pixels_in_the_image) {
+		if (curent_pixel_value < treshold) then new_pixel_value = 0
+		else new_pixel_value = 255 }
+	end_time = get_time ()
+	out >> "Computing time " end_time - start_time
+	write_image_result
+}
+\end{minted}
+
+To do so, you will need to include assembly inside your C code:
+
+\begin{minted}{C}
+fonctionC()
+{
+	_asm{
+		/* ASM code */
+		"sub $1, %%rdx\n"
+	}
+}
+\end{minted}
+
+\section*{Assignment}
+\begin{enumerate}
+	\item Implement the image threshold processing in plain C.
+	\item Implement the same algorithm in SIMD.
+	\item Benchmark both solutions and compare their performance.
+\end{enumerate}
+
+Send only your source files, \textit{i.e.} .c/.h/.cpp/.hpp.
+If your code requires specific configuration flags for the compilation, please write them down as comments in your code.
+
+Your code should run flawlessly on any computer.
+Make sure it's well documented and that the access path of the input files can easily be changed.
+
+
+\end{document}
