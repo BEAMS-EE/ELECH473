@@ -2,9 +2,9 @@
 
 ## SIMD Tips and tricks
 
-- [SIMD list of instructions]{https://www.felixcloutier.com/x86/}
+- [SIMD list of instructions](https://www.felixcloutier.com/x86/)
 - Image conversion of raw image to other format using ImageMagick `convert -size 1024x1024 -depth 8 gray:in.raw out.bmp`
-- [Website to visualize raw images]{http://rawpixels.net/}
+- [Website to visualize raw images](http://rawpixels.net/)
 - Code snippet substracting 42 from a vector:
 ```C
 unsigned char* foo = malloc(sizeof(unsigned char) * 16);
@@ -15,4 +15,4 @@ __asm__(
     /* outputs, inputs, clobbers*/
 );
 ```
-- Multithreading in C using pthread: [gist]{https://gist.github.com/parastuffs/a7818b1ff46de40b95949943fbd53c8b}
+- Multithreading in C using pthread: [gist](https://gist.github.com/parastuffs/a7818b1ff46de40b95949943fbd53c8b)
