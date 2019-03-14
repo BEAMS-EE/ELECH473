@@ -192,13 +192,21 @@ fonctionC()
 	\item Implement the image threshold processing in plain C.
 	\item Implement the same algorithm in SIMD.
 	\item Benchmark both solutions and compare their performance.
+	If the precision of your benchmarking is not sufficient (especially on Windows), run the filter several times (only the filter, not the file reading and writing).
+
+	Comment on the expected acceleration factor, the actual results, the difference between debug and release compilation, etc.
 \end{enumerate}
 
-Send only your source files, \textit{i.e.} .c/.h/.cpp/.hpp.
-If your code requires specific configuration flags for the compilation, please write them down as comments in your code.
+\subsection*{Code requirements}
 
-Your code should run flawlessly on any computer.
-Make sure it's well documented and that the access path of the input files can easily be changed.
+\begin{itemize}
+	\item Send only your source files, \textit{i.e.} .c/.h/.cpp/.hpp. Do \textit{not} send the input and output files.
+	\item If your code requires specific configuration flags for the compilation, please write them down as comments in your code.
+	\item Make sure it's well documented.
+	\item All the input and output files should be in the source directory.
+	\item All the output files should have the same base name as the source files on the UV (ie. Escher, kid or lena\_gray), appended with ``out\_C.raw'' or ``out\_SIMD.raw''.
+	\item Do not use any weird library that may not compile on a Linux-based computer.
+\end{itemize}
 
 
 \end{document}
