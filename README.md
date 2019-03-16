@@ -18,3 +18,4 @@ __asm__(
 - Multithreading in C using pthread: [gist](https://gist.github.com/parastuffs/a7818b1ff46de40b95949943fbd53c8b)
 - In Code::Blocks, make sure to enable the SIMD instruction set. Go to `Project > Build options...`, then in the `Compiler settings`tab, check the relevant `CPU architecture` box. If you don't know which one to use, check the `Intel Core i7 CPU` with the most items.
 If you are compiling in command line, the corresponding flag is `-march=corei7-avx`.
+- You can use [this tool](https://github.com/parastuffs/AT-T_Intelx86_converter "AT-T Intelx86 converter") to convert ASM code between the AT&T and Intel syntaxes.
