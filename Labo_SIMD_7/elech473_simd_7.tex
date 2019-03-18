@@ -39,7 +39,7 @@
 \usepackage{fontawesome} %Symbols
 \usepackage[cache=false]{minted}
 
-\newcommand{\version}{v1.0.0}
+\newcommand{\version}{v1.0.1}
 
 %cyr
 %\newcommand\textcyr[1]{{\fontencoding{OT2}\fontfamily{wncyr}\selectfont #1}}
@@ -180,10 +180,29 @@ To do so, you will need to include assembly inside your C code:
 \begin{minted}{C}
 fonctionC()
 {
-	_asm{
+	__asm__{
 		/* ASM code */
 		"sub $1, %%rdx\n"
 	}
+}
+\end{minted}
+
+And here is a snippet of code measure time:
+\begin{minted}{C}
+#include <stdlib.h>
+#include <stdio.h>
+#include <time.h>
+
+int main() {
+	clock_t start, end;
+	start = clock();
+
+	/* Do something clever */
+
+	end = clock();
+	float time = (float)(end - start)/CLOCKS_PER_SEC;
+	printf("Time spent: %f\n", time);
+	return EXIT_SUCCESS;
 }
 \end{minted}
 
