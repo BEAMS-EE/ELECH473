@@ -38,7 +38,7 @@
 \usepackage{rotating}
 \usepackage{fontawesome} %Symbols
 
-\newcommand{\version}{v1.0.2}
+\newcommand{\version}{v1.0.3}
 
 %cyr
 %\newcommand\textcyr[1]{{\fontencoding{OT2}\fontfamily{wncyr}\selectfont #1}}
@@ -194,6 +194,7 @@ You can import custom levels by copying the corresponding \texttt{.lua} files in
 \begin{itemize}
 	\item[\faWindows] \verb|My Documents\My Games\TIS-100\<UID>\custom|
 	\item[\faLinux] \verb|$HOME/.local/share/TIS-100/<UID>/custom|
+	\item[\faApple] \verb|$HOME/Library/Application Support/TIS-100/<UID>/custom|
 \end{itemize}
 where \texttt{<UID>} is either \texttt{0} if you are using the DRM-free version of the game or your Steam ID if you are playing on Steam.
 
@@ -227,6 +228,7 @@ Those save files can be found in:
 \begin{itemize}
 	\item[\faWindows] \verb|My Documents\My Games\TIS-100\<UID>\save\<solution_file>|
 	\item[\faLinux] \verb|$HOME/.local/share/TIS-100/<UID>/save/<solution_file>|
+	\item[\faApple] \verb|$HOME/Library/Application Support/TIS-100/<UID>/save/<solution_file>|
 \end{itemize}
 where \texttt{<solution\_file>} follows this syntax: \texttt{SPEC<specification ID>.<solution number>.txt}.
 
