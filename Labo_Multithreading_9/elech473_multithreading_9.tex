@@ -41,7 +41,7 @@
 \usepackage{minted}
 
 
-\newcommand{\version}{v1.0.0}
+\newcommand{\version}{v1.0.1}
 
 %cyr
 %\newcommand\textcyr[1]{{\fontencoding{OT2}\fontfamily{wncyr}\selectfont #1}}
@@ -199,7 +199,7 @@ int main()
  
     // Create three threads
     for (i = 0; i < maxThreads; i++) {
-        Args *arg = malloc(sizeof(*arg));
+        Args *arg = (Args*) malloc(sizeof(Args));
         arg->i = i;
         pthread_create(&tid[i], NULL, myThreadFun, arg);
     }
