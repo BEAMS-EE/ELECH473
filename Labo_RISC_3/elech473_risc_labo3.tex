@@ -41,7 +41,7 @@
 \usepackage[ ]{subfig}
 %\usepackage{rotating}
 
-\newcommand{\version}{v1.0.2}
+\newcommand{\version}{v1.0.3}
 
 %cyr
 %\newcommand\textcyr[1]{{\fontencoding{OT2}\fontfamily{wncyr}\selectfont #1}}
@@ -329,13 +329,13 @@ Bitwise AND between content of \reg{B} and content of \reg{C}. Result is written
 \subsection{Branch instructions}
 \subsubsection*{ Defined in IS[1] and IS[2]}
 \subsubsection{$\on{BL} \on{(Branch~if~Lower)}:\newline \on{if} \left( R\left[ \on{regA} \right] < R\left[ \on{regB} \right]\right) \left\lbrace\on{PC} \longleftarrow \on{PC}+1+\on{immed} \right\rbrace\on{else} \left\lbrace\on{PC} \longleftarrow \on{PC}+1\right\rbrace $}
-Compare content of \reg{A} with content of \reg{B}, if \reg{A} lower than \reg{B} then\\$\on{PC}=\on{PB}_{BL}+1+\on{imm(extend)}$ else $\on{PC}=\on{PC}_{BL}+1$.
+Compare content of \reg{A} with content of \reg{B}, if \reg{A} lower than \reg{B} then\\$\on{PC}=\on{PC}_{BL}+1+\on{imm(extend)}$ else $\on{PC}=\on{PC}_{BL}+1$.
 
 %Bitwise OR between content of \reg{B} and content of \reg{C}. Result is written in \reg{A}.
 \subsubsection*{ Defined in IS[1], replaced by \texttt{MUL} IS[2]}
 
 \subsubsection{$\on{BG} \on{(Branch~if~Greater)}:\newline \on{if} \left( R\left[ \on{regA} \right] > R\left[ \on{regB} \right]\right) \left\lbrace\on{PC} \longleftarrow \on{PC}+1+\on{immed} \right\rbrace\on{else} \left\lbrace\on{PC} \longleftarrow \on{PC}+1\right\rbrace $}
-Compare content of \reg{A} with content of \reg{B}, if \reg{A} greater than \reg{B} then\\$\on{PC}=\on{PB}_{BL}+1+\on{imm(extend)}$ else $\on{PC}=\on{PC}_{BL}+1$.
+Compare content of \reg{A} with content of \reg{B}, if \reg{A} greater than \reg{B} then\\$\on{PC}=\on{PC}_{BL}+1+\on{imm(extend)}$ else $\on{PC}=\on{PC}_{BL}+1$.
 
 \subsection{Shift instructions}
 
