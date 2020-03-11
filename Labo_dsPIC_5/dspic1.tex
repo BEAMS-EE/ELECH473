@@ -64,7 +64,7 @@
 %% fancy header & foot
 \pagestyle{fancy}
 \lhead{[ELEC-H-473] Microprocessor Architecture dsPIC33}
-\rhead{v1.0.0\\ page \thepage}
+\rhead{v2.0.0\\ page \thepage}
 \chead{\ifthenelse{\boolean{corrige}}{Corrigé}{}}
 \cfoot{}
 %%
@@ -103,7 +103,7 @@ pdfsubject={dsPIC33}
 
 %\setlength{\tabcolsep}{0pt} %no extra space in cells to keep constant tabular width
 
-\date{\vspace{-1cm}v1.0.0}
+\date{\vspace{-1cm}v2.0.0}
 \title{\vspace{-2cm} Labo n° 5\\ Microprocessor Architectures [ELEC-H-473]\\ dsPIC33: simulation \ifthenelse{\boolean{corrige}}{~\\Corrigé}{}}
 
 %\author{\vspace{-1cm}}%\textsc{Yannick Allard}}
@@ -150,15 +150,18 @@ pdfsubject={dsPIC33}
 
 
 \subsection*{Useful Documents}
-A set of useful documents can be found in the network share ``Labo/ELEC-H-473/dsPIC33": %XXX-XXX\marginpar{right path}
+During this lab, you will be simulating a Microchip dsPIC33F microcontroller, using the MPLAB X IDE and the XC16 C Compiler.
+A set of useful documents can be found in the lab's network share ``Labo/ELEC-H-473/dsPIC33": %XXX-XXX\marginpar{right path}
 \begin{itemize}
-\item Introduction to MPLAB
+%\item Introduction to MPLAB
 %\item The Explorer16 board documentation
-\item \href{http://ww1.microchip.com/downloads/en/devicedoc/c30_users_guide_51284f.pdf}{MPLAB C30 C Compiler User's guide }
+%\item \href{http://ww1.microchip.com/downloads/en/devicedoc/c30_users_guide_51284f.pdf}{MPLAB C30 C Compiler User's guide }
+\item \href{http://ww1.microchip.com/downloads/en/DeviceDoc/XC16%20C%20Compiler%20UG%20DS50002071J.pdf}{MPLAB XC16 C Compiler User's guide }
 \item \href{http://ww1.microchip.com/downloads/en/DeviceDoc/70157C.pdf}{dsPIC30F/33F Programmer's Reference Manual}
 \item \href{http://ww1.microchip.com/downloads/en/DeviceDoc/70286C.pdf}{dsPIC33FJXXXGPX06/X08/X10 Data Sheet}
 \item \href{http://ww1.microchip.com/downloads/en/DeviceDoc/70204C.pdf}{dsPIC30F/33F CPU reference manual}
 \end{itemize}
+
 
 \section{Architecture analysis}
 
@@ -179,11 +182,11 @@ A set of useful documents can be found in the network share ``Labo/ELEC-H-473/ds
 % \Q{Examine the notion of ``format" of the instruction and show using examples that the size of the instruction introduces limitations in the range of each addressing mode and in the size of constants. }{}
 
 
-\section{MPLAB IDE -- Simulation workspace}
+\section{MPLAB X IDE -- Simulation workspace}
 You can configure your environment to suit your needs:
 \begin{itemize}
-\item Launch the MPLAB IDE.
-\item Open the workspace \textbf{``Simul\_dsPIC1.mcw"} (File>Open Workspace) which already includes:
+\item Launch the MPLAB X IDE.
+\item Open the project \textbf{``h473\_dsPIC.X"} (File > Open Project...) which already includes:
 \begin{itemize}
 	 \item the choice of the microcontroller.
 	 \item the configuration of the debugger in the \textit{simulation mode} which enables you to execute and debug the code in your development environment, \textit{without} any microcontroller hardware.
@@ -193,22 +196,21 @@ You can configure your environment to suit your needs:
 \begin{itemize}
 	\item C source code
 	\item Output for note, warning and error messages
-	\item Disassembly listing (right-click in the window and check ``Symbolic Disassembly")
-	\item Memory Usage: amount of memory used for program and data
+	\item Disassembly listing (Window > Debugging > Output > Disassembly Listing File or Window > Debugging > Disassembly, but the later requires the simulation to be started in debugging mode first)
+	%\item Memory Usage: amount of memory used for program and data
 	\item Stopwatch: number of cycles required to execute each instruction
 	\item Watch window to observe the registers and variables
 	\item File Register: to dump the Data Memory
 \end{itemize}
-\item Save your workspace under another name (File>Save Workspace as) to be able to reuse it any time.
 \end{itemize}
 
 
 
 
 \section{Project organisation}
-Using the MPLAB IDE, you now will compile some code for the \kw{dsPIC33} using the C30 compiler and analyse it. %The project includes some header files and some :
+Using the MPLAB X IDE, you now will compile some code for the \kw{dsPIC33} using the XC16 compiler and analyse it. %The project includes some header files and some :
 \subsection{ Header Files}
-Notice the presence of the file \kw{p33FJ256GP710.h} in the header files. Double-click on it and read its content.
+Notice the presence of the file \kw{p33FJ256GP710.h} in the header files. Double-click on it and read its content\footnote{This file should be located in \texttt{<Programs directory>/Microchip/xc16/<version number>/support/dsPIC33F/h/}}.
 
 \Q{Look at lines related to the I/O port \kw{PORTA}, for example. Explain the utility of this header file.}{}
 
@@ -255,8 +257,7 @@ In this lab, you will use the header file \kw{Datatypes.h} to redefine the types
 %variables.c
 \begin{itemize}
 \item Replace the file \kw{initvar.c} by \kw{variables.c}.
-\item Make the line numbers appear in the C source (right-click on Edit->Properties->C File Type ->line numbers)
-\item Click on ``Build all" to compile and link every file of the project. Ignore the warnings for the moment.
+\item Click on ``Build Main Project" (hammer icon) to compile and link every file of the project. Ignore the warnings for the moment.
 \end{itemize}
 
 
@@ -296,12 +297,11 @@ Replace \kw{variables.c} by \kw{assign.c} and compile.
 
 
 \section{Arithmetics}
-Open the workspace \textbf{``Simul\_dsPIC2.mcw"} (File>Open Workspace).
 \subsection{Basics}
 Replace, in your current project, the source file by \kw{arithm.c} and compile the project.
 \Q{How are the different additions and multiplications carried out?}{}
 \Q{For each operation, indicate if the result is correct; if it is not, explain the error and the result obtained. Explain the tests (if) based on the "Carry" \kw{C} and on the "Overflow" \kw{OV}.}{}
-\Q{Compare time necessary to execute the multiplications.  Are all results correct?}{}
+\Q{Compare time necessary to execute the multiplications.}{}
 
 
 ~\\\fbox{
@@ -335,7 +335,7 @@ Replace the file \kw{exemple1.c} by \kw{exemple2.c}; compile the project;
 }{}
 \Q{Explain how rounding works in the 3rd method.}{}
 
-\Q{What is, in your opinion, the greatest disadvantage of the second method?
+\Q{What is, in your opinion, the worst disadvantage of the second method?
 
 The constants by which \kw{f1} and \kw{f2} are multiplied are chosen this way and:
 \begin{itemize}
@@ -372,7 +372,7 @@ Replace the file \kw{exemple2.c} by \kw{param1.c}  and compile the project.
 \Q{How \kw{Add3()} and \kw{Mul2()} return their results?}{}
 
 \subsection{Passing by reference}
-Replace the file \kw{param.c} by \kw{param2.c}  and compile the project.
+Replace the file \kw{param1.c} by \kw{param2.c}  and compile the project.
 
 \noindent
 In this file, in \kw{function1()}, an array is passed as a parameter.
