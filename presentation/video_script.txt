@@ -1,0 +1,57 @@
+Hello and welcome to this introductive video to the laboratory
+work of the course microprocessor architecture.
+In this series of labs you will study different microprocessor
+architectures in a practical way and apply what you will 
+learn in various exercices.
+
+There are a lot of different architectures out there,  
+the point of this course in to introduce you to mutltiple
+examples of such architectures, to make you understand how
+their basic components operate and lay out the fundations 
+on how microprocessors and microcontrollers work.
+
+At the end of this course you should be able to work with
+the different architectures we will present but also to have solid
+general knowledge allowing you to tackle and learn new architectures
+that you may not have seen before.
+
+All the material required for this course is available on the
+virtual university, also called UV, on the page of the course.
+
+You will have one lab per week, for a total of 9 labs,
+during some labs you will also have assignements, for a 
+total of 5 assignements, you will find 
+more information on the practical organisation
+of the labs at the end of the video, or directly on the UV.
+
+The people involved in this course are: professor
+Dragomir Milojevic, who teaches the main course,
+and the teaching assistants.
+
+The teaching assistants will be available 2 times per week, 
+for Q&A sessions about the laboratory work. 
+The schedule for the Q&As is available on the UV.
+
+We will study four architectures, starting with the RiSC16, a small
+RiSC architecture created for edutiocationnal purposes during 4 sessions.
+We will then see the dsPIC33 architecture, the architecture used
+on dsPIC microcontrollers for 2 sessions.
+Then, one session will be devoted to exercice on a small game with the TIS-100 architecture.
+We will then finish with 3 sessions on the x86_64 architecture, the standard architecture
+for most desktop and laptop computers, and specificly we will study
+a special set on instructions called SIMD, Single Instruction Multiple Data,
+available on this platform.
+
+So what do you now ?
+You should start by forming groups of 4 students and enroll in a group
+on the UV.
+Being enrolled in a group is very important and mandatory if you want to
+ba able to submit your assignements.
+There will be 5 assignements in total, as you can see in this table,
+2 for the RiSC16, 1 for dsPIC33, 1 for TIS-100 and 2 for x86_64-SIMD.
+Those assignements will be part of your final grade for the course.
+The deadlines for each assignement is indicated on the UV. 
+
+
+
+
