@@ -35,7 +35,7 @@ The schedule for the Q&As is available on the UV.
 We will study four architectures, starting with the RiSC16, a small
 RiSC architecture created for edutiocationnal purposes during 4 sessions.
 We will then see the dsPIC33 architecture, the architecture used
-on dsPIC microcontrollers for 2 sessions.
+on dsPIC microcontrollers for 1 session.
 Then, one session will be devoted to exercice on a small game with the TIS-100 architecture.
 We will then finish with 3 sessions on the x86_64 architecture, the standard architecture
 for most desktop and laptop computers, and specificly we will study
@@ -48,7 +48,7 @@ on the UV.
 Being enrolled in a group is very important and mandatory if you want to
 ba able to submit your assignements.
 There will be 5 assignements in total, as you can see in this table,
-2 for the RiSC16, 1 for dsPIC33, 1 for TIS-100 and 2 for x86_64-SIMD.
+2 for the RiSC16, 1 for TIS-100 and 2 for x86_64-SIMD.
 Those assignements will be part of your final grade for the course.
 The deadlines for each assignement is indicated on the UV. 
 
