@@ -41,7 +41,7 @@
 \usepackage[ ]{subfig}
 %\usepackage{rotating}
 
-\newcommand{\version}{v1.0.3}
+\newcommand{\version}{v1.0.4}
 
 %cyr
 %\newcommand\textcyr[1]{{\fontencoding{OT2}\fontfamily{wncyr}\selectfont #1}}
@@ -667,14 +667,14 @@ Compare performances of several algorithm using several instruction sets:
 \noindent Choose an operator in $\left\lbrace <, >, \leq, \geq \right\rbrace$.
 
 \begin{Q}
-	Determine a set of test vectors which could test the functionality and corner cases of your operator. Justify all vectors utility. We target \textbf{signed numbers}.	[1 point]
+	Determine a set of test vectors which could test the functionality and corner cases of your operator. Justify all vectors utility. We target \textbf{signed numbers}.
 \end{Q}
 
 \begin{Q}
 	Write the code for your operator using:
 	\begin{itemize}
-	\item the original 8 instructions [1 point]
-	\item the Special IS[1] 17-bit [1 point]
+	\item the original 8 instructions
+	\item the Special IS[1] 17-bit
 	\end{itemize}
 \end{Q}
 
@@ -682,9 +682,9 @@ Compare performances of several algorithm using several instruction sets:
 
 Write a program to multiply the \textbf{unsigned} content of \reg{1} and \reg{2} and write the result in \reg{3} and \reg{4}, LSB in \reg{3}.
 \begin{enumerate}
-\item Write\footnote{\label{assign}And test it using the online verification tool, the results will be included in the quotation of these labs.} the program using the Special IS[1] 17-bit instruction set. [3 points]
-\item Write\footref{assign} the program using the Special IS[2] and using the \verb!MUL! instruction. [3 points]
-\item Conclude. [1 point]
+\item Write\footnote{\label{assign}And test it using the online verification tool, the results will be included in the quotation of these labs.} the program using the Special IS[1] 17-bit instruction set.
+\item Write\footref{assign} the program using the Special IS[2] and using the \verb!MUL! instruction.
+\item Conclude.
 \end{enumerate}
 Note : the processor uses signed integers (complement to 2 representation) by default.
 \end{Q}
