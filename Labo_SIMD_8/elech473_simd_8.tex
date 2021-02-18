@@ -18,7 +18,7 @@
 \usepackage[siunitx ]{circuitikz}
 %\usepackage{gnuplottex}
 \usepackage{ifthen}
-\graphicspath{{./figures/}}
+\graphicspath{{./figures/}{./images/}}
 \usepackage{array}
 \usepackage{amsmath}
 \usepackage[]{xcolor}
@@ -37,6 +37,7 @@
 \usepackage{booktabs}
 \usepackage{rotating}
 \usepackage{fontawesome} %Symbols
+\usepackage{subcaption}
 
 \newcommand{\version}{v1.0.0}
 
@@ -128,6 +129,28 @@ This lab will focus on non-linear filtering algorithms that allows you to extrac
 
 Please refer to the course slides for an explanation about those filters.
 
+\begin{figure*}[h]
+    \centering
+    \begin{subfigure}[t]{0.3\textwidth}
+        \centering
+        \includegraphics[height=4cm]{Escher.png}
+        \caption{Reference image}
+    \end{subfigure}%
+    ~ 
+    \begin{subfigure}[t]{0.3\textwidth}
+        \centering
+        \includegraphics[height=4cm]{out_3.png}
+        \caption{3x3}
+    \end{subfigure}%
+    ~ 
+    \begin{subfigure}[t]{0.3\textwidth}
+        \centering
+        \includegraphics[height=4cm]{out_5.png}
+        \caption{5x5}
+    \end{subfigure}
+    \caption{Min/max filtering with different bouding box sizes.}
+\end{figure*}
+
 \section*{Assignment}
 \begin{enumerate}
 	\item Implement the min/max filtering (contour extraction) in C.
@@ -136,7 +159,16 @@ Please refer to the course slides for an explanation about those filters.
 	\item Benchmark both solutions and compare their performance.
 \end{enumerate}
 
-Make sure you follow the same code requirements as for the first SIMD lab.
+\subsection*{Code requirements}
+
+\begin{itemize}
+	\item Send only your source files, \textit{i.e.} .c/.h/.cpp/.hpp. Do \textit{not} send the input and output files.
+	\item If your code requires specific configuration flags for the compilation, please write them down as comments in your code.
+	\item Make sure it's well documented.
+	\item All the input and output files should be in the source directory.
+	\item All the output files should have the same base name as the source files on the UV (ie. Escher, kid or lena\_gray), appended with ``out\_C.raw'' or ``out\_SIMD.raw''.
+	\item Do not use any weird library that may not compile on a Linux-based computer.
+\end{itemize}
 
 
 \end{document}
