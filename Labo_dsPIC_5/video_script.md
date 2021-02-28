@@ -1,5 +1,5 @@
 ## First part: present the lab and the architecture (briefly)
-Hello again and welcome to a new subject. In this video, you will understand what is expected of you and how to use the projects you have been given.
+Hello and welcome to a new subject. In this video, you will understand what is expected of you and how to use the projects files you have been given.
 
 During this lab, you will discover a new architecture: the dsPIC33.
 More than a simple CPU like the RISC16 was, the dsPIC33 is a full fledged micro-controller.
