@@ -38,7 +38,7 @@
 \usepackage{rotating}
 \usepackage{fontawesome} %Symbols
 
-\newcommand{\version}{v1.1.0}
+\newcommand{\version}{v1.2.0}
 
 %cyr
 %\newcommand\textcyr[1]{{\fontencoding{OT2}\fontfamily{wncyr}\selectfont #1}}
@@ -215,9 +215,9 @@ You should get the hang of it by the end of the fourth level: ``Signal comparato
 
 \subsection{Assignment}
 We ask you to solve two custom levels: ``Decode the image" and ``Coprime detector", \textbf{not} ``Multiplication" which is only there as an optional non-graded bonus.
-The grade will be based on the performance of all the submissions and weighted across the three measures: node, instruction and cycle count.
-If you performed better than all the other groups for at least one of the three performance measures, you will get a perfect grade for the exercise, that is five out of five.
-Otherwise, you will be awarded two points if the problem is solved and each of the remaining three will be linearly weighted against all submissions for each metrics (e.g. if you performed the worst in all three measures, you won't get any more point, if you are right at the average, you will get half a point each, i.e. 3.5/5). Table~\ref{tab:scores} gives you the minimum and maximum submission scores for a given year.
+The grade will be based on the performance of benchmarks and weighted across the three measures: node, instruction and cycle count.
+If you performed better than the benchmark for at least one of the three performance measures, you will get a perfect grade for the exercise, that is five out of five.
+Otherwise, you will be awarded two points if the problem is solved and each of the remaining three will be linearly weighted against the benchmark bounds for each metrics (e.g. if you performed the worst in all three measures, you won't get any more point, if you are right at the average, you will get half a point each, i.e. 3.5/5). Table~\ref{tab:scores} gives you the benchmark bounds.
 
 \textit{Note:} For ``Decode the image", you \textbf{have to} work with the inputs.
 
@@ -228,10 +228,10 @@ Otherwise, you will be awarded two points if the problem is solved and each of t
 \begin{tabular}{lcccccc}
  & \multicolumn{2}{c}{Cycles} & \multicolumn{2}{c}{Nodes} & \multicolumn{2}{c}{Instructions} \\\toprule
  & min & max & min & max & min & max \\\midrule
-Image & 778 & 1482 & 4 & 9 & 38 & 91 \\
-Coprime & 8771 & 26827 & 4 & 10 & 26 & 73 \\\bottomrule
+Image & 850 & 1500 & 4 & 10 & 40 & 60 \\
+Coprime & 7000 & 25000 & 4 & 10 & 25 & 55 \\\bottomrule
 \end{tabular}
-\caption{Score for a given year. If you had submitted both assignments working with just 4 nodes each, you would have scored 10/10 regardless of you other metrics, since one of them (node count) was the best amongst all submissions.}\label{tab:scores}
+\caption{Score bounds for evaluation. If you submit both assignments working with just 4 nodes each, you would have scored 10/10 regardless of you other metrics, since one of them (node count) is at least as good as the benchmark bound for each exercise.}\label{tab:scores}
 \end{table}
 ~\\
 
